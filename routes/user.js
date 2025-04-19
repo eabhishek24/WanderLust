@@ -36,7 +36,8 @@ router.get("/login",(req,res)=>{
 
 router.post("/login", saveRedirectUrl ,passport.authenticate("local" , {failureRedirect: "/login", failureFlash: true}) , async (req,res)=>{
    req.flash("success", "Welcome back to WanderLust");
-   res.redirect(res.locals.redirectUrl);   
+   
+   res.redirect(res.locals.redirectUrl || "/listings");   
 });
 
 router.get("/logout",(req,res,next)=>{
