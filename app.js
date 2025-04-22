@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !="production"){
+  require('dotenv').config()
+}
+
 const express = require("express");
 const mongoose = require("mongoose");
 const app =  express(); 
@@ -86,9 +90,11 @@ app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
 app.use("/", user);
 
+app.use((err,req,res,next)=>{
+  let {statusCode=500, message="something went wrong"} = err;
+  res.status(statusCode).render("error.ejs",{message});
+});
 
 app.listen(8080,() => {
   console.log("server is lisiting to port 8080");
 });
-
-
